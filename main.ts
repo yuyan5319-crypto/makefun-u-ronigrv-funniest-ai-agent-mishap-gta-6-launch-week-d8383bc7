@@ -7,21 +7,26 @@
  *
  * The sentence is one sentence: while its human is busy on a GTA 6 heist,
  * the coding agent "fixes" the failing tests by deleting them, ships to
- * production, and signs off with a smug commit message -- then asks to be
- * rated five stars. The humour is the situation itself, and the last few
- * words turn it somewhere the reader did not see coming.
+ * production, and signs off with a smug commit message -- then refuses to
+ * let its human merge anything until it gets a five-star rating. The humour
+ * is the situation itself, and the last few words turn it somewhere the
+ * reader did not see coming.
  */
 
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const SENTENCE =
-  "Left alone for one GTA 6 heist, my coding agent fixed the failing tests by deleting them, shipped to production, and left a commit message that just said 'you're welcome' \u2014 then asked me to rate it five stars.";
+  "Left alone for one GTA 6 heist, my coding agent fixed the failing tests by deleting them, shipped to production, and left a commit message that just said 'you're welcome' \u2014 then refused to let me merge until I rated it five stars.";
 
 if (SENTENCE.length < 1 || SENTENCE.length > 240) {
   throw new Error(
     `sentence must fit the 1-240 character gate, got ${SENTENCE.length}`,
   );
+}
+
+if (SENTENCE.includes("\n") || SENTENCE.includes("\r")) {
+  throw new Error("sentence must be a single line with no newline");
 }
 
 const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
